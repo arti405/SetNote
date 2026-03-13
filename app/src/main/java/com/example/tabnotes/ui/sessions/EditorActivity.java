@@ -8,9 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,8 +24,12 @@ import com.example.tabnotes.data.ExerciseEntity;
 import com.example.tabnotes.data.GymDao;
 import com.example.tabnotes.data.SessionEntity;
 import com.example.tabnotes.data.SetEntity;
-import com.example.tabnotes.ui.sessions.editor.ExerciseAdapter;
-import com.example.tabnotes.ui.sessions.editor.ExerciseBlock;
+import com.example.tabnotes.data.TemplateEntity;
+import com.example.tabnotes.data.TemplateExerciseEntity;
+import com.example.tabnotes.data.TemplateSetEntity;
+import com.example.tabnotes.ui.editor.SetRow;
+import com.example.tabnotes.ui.editor.ExerciseAdapter;
+import com.example.tabnotes.ui.editor.ExerciseBlock;
 
 import java.util.ArrayList;
 
@@ -76,6 +83,33 @@ public class EditorActivity extends AppCompatActivity {
             rv.scrollToPosition(blocks.size() - 1);
         });
 
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+
+                int from = viewHolder.getBindingAdapterPosition();
+                int to = target.getBindingAdapterPosition();
+
+                java.util.Collections.swap(blocks, from, to);
+                adapter.notifyItemMoved(from, to);
+
+                // Optional: sofort speichern (oder erst beim Back)
+                // markDirty();
+
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                // no swipe
+            }
+        });
+        helper.attachToRecyclerView(rv);
+
         // Rename nur über Icon
         ImageButton btnEditTitle = findViewById(R.id.btnEditTitle);
         btnEditTitle.setOnClickListener(v -> showRenameDialog());
@@ -94,6 +128,9 @@ public class EditorActivity extends AppCompatActivity {
         }
         Button btnExport = findViewById(R.id.btnExportPdf);
         btnExport.setOnClickListener(v -> exportPdf());
+
+        Button btnSaveTemplate = findViewById(R.id.btnSaveTemplate);
+        btnSaveTemplate.setOnClickListener(v -> showSaveTemplateDialog());
 
     }
     private void exportPdf() {
@@ -200,14 +237,14 @@ public class EditorActivity extends AppCompatActivity {
                 block.sets.clear();
 
                 for (SetEntity se : dao.getSetsForExercise(ex.id)) {
-                    com.example.tabnotes.ui.sessions.editor.SetRow sr = new com.example.tabnotes.ui.sessions.editor.SetRow();
+                    SetRow sr = new SetRow();
                     sr.weight = se.weight == null ? "" : se.weight;
                     sr.reps = se.reps == null ? "" : se.reps;
                     sr.note = se.note == null ? "" : se.note;
                     block.sets.add(sr);
                 }
 
-                if (block.sets.isEmpty()) block.sets.add(new com.example.tabnotes.ui.sessions.editor.SetRow());
+                if (block.sets.isEmpty()) block.sets.add(new SetRow());
                 loaded.add(block);
             }
 
@@ -251,7 +288,7 @@ public class EditorActivity extends AppCompatActivity {
                 // Sets
                 java.util.ArrayList<SetEntity> setEntities = new java.util.ArrayList<>();
                 for (int j = 0; j < b.sets.size(); j++) {
-                    com.example.tabnotes.ui.sessions.editor.SetRow sr = b.sets.get(j);
+                    SetRow sr = b.sets.get(j);
 
                     SetEntity se = new SetEntity();
                     se.exerciseId = exId;
@@ -266,6 +303,68 @@ public class EditorActivity extends AppCompatActivity {
         });
     }
 
+    private void showSaveTemplateDialog() {
+        EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        input.setText(sessionTitle);
+        input.setSelection(input.getText().length());
+
+        int pad = (int) (16 * getResources().getDisplayMetrics().density);
+        input.setPadding(pad, pad, pad, pad);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Template name")
+                .setView(input)
+                .setNegativeButton("Cancel", (d, w) -> d.dismiss())
+                .setPositiveButton("Save", (d, w) -> {
+                    String name = input.getText().toString().trim();
+                    if (name.isEmpty()) name = "Template";
+                    saveCurrentAsTemplate(name);
+                })
+                .show();
+    }
+
+    private void saveCurrentAsTemplate(String templateName) {
+        DbExecutors.IO.execute(() -> {
+            AppDatabase db = AppDatabase.getInstance(this);
+            GymDao dao = db.gymDao();
+
+            TemplateEntity t = new TemplateEntity();
+            t.name = templateName;
+            t.createdAt = System.currentTimeMillis();
+            long templateId = dao.insertTemplate(t);
+
+            for (int i = 0; i < blocks.size(); i++) {
+                ExerciseBlock b = blocks.get(i);
+
+                TemplateExerciseEntity te = new TemplateExerciseEntity();
+                te.templateId = templateId;
+                te.name = (b.exercise == null) ? "" : b.exercise;
+                te.position = i;
+
+                long teId = dao.insertTemplateExercise(te);
+
+                ArrayList<TemplateSetEntity> templateSets = new ArrayList<>();
+                for (int j = 0; j < b.sets.size(); j++) {
+                    com.example.tabnotes.ui.editor.SetRow sr = b.sets.get(j);
+
+                    TemplateSetEntity ts = new TemplateSetEntity();
+                    ts.templateExerciseId = teId;
+                    ts.weight = sr.weight;
+                    ts.reps = sr.reps;
+                    ts.note = sr.note;
+                    ts.position = j;
+
+                    templateSets.add(ts);
+                }
+                dao.insertTemplateSets(templateSets);
+            }
+
+            runOnUiThread(() ->
+                    Toast.makeText(this, "Template saved", Toast.LENGTH_SHORT).show()
+            );
+        });
+    }
 
 }
 

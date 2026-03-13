@@ -6,7 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {SessionEntity.class, ExerciseEntity.class, SetEntity.class}, version = 1)
+@Database(entities = {
+        SessionEntity.class, ExerciseEntity.class, SetEntity.class,
+        TemplateEntity.class, TemplateExerciseEntity.class, TemplateSetEntity.class, FolderEntity.class, CollectionEntity.class, CollectionSessionEntity.class
+},
+        version = 4,
+        exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract GymDao gymDao();
@@ -19,6 +24,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(ctx.getApplicationContext(),
                                     AppDatabase.class, "tabnotes_db")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

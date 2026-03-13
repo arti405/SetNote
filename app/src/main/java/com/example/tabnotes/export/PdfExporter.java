@@ -11,10 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.example.tabnotes.ui.sessions.editor.ExerciseBlock;
-import com.example.tabnotes.ui.sessions.editor.SetRow;
-
-import android.graphics.pdf.PdfDocument;
+import com.example.tabnotes.ui.editor.ExerciseBlock;
+import com.example.tabnotes.ui.editor.SetRow;
 
 
 public class PdfExporter {

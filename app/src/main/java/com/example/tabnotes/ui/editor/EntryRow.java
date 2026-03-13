@@ -1,4 +1,4 @@
-package com.example.tabnotes.ui.sessions.editor;
+package com.example.tabnotes.ui.editor;
 
 public class EntryRow {
     public String exercise = "";

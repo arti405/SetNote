@@ -1,4 +1,4 @@
-package com.example.tabnotes.ui.sessions.editor;
+package com.example.tabnotes.ui.editor;
 
 import java.util.ArrayList;
 

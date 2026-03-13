@@ -3,6 +3,7 @@ package com.example.tabnotes.ui.sessions;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,15 +17,23 @@ import java.util.List;
 public class SessionEntityAdapter extends RecyclerView.Adapter<SessionEntityAdapter.VH> {
 
     public interface OnSessionClick {
-        void onClick(int position);
+        void onClick(SessionEntity session);
+    }
+
+    public interface OnSessionMoreClick {
+        void onMoreClick(View anchor, SessionEntity session);
     }
 
     private final List<SessionEntity> items;
     private final OnSessionClick onClick;
+    private final OnSessionMoreClick onMoreClick;
 
-    public SessionEntityAdapter(List<SessionEntity> items, OnSessionClick onClick) {
+    public SessionEntityAdapter(List<SessionEntity> items,
+                                OnSessionClick onClick,
+                                OnSessionMoreClick onMoreClick) {
         this.items = items;
         this.onClick = onClick;
+        this.onMoreClick = onMoreClick;
     }
 
     @NonNull
@@ -44,7 +53,8 @@ public class SessionEntityAdapter extends RecyclerView.Adapter<SessionEntityAdap
         String date = android.text.format.DateFormat.format("yyyy-MM-dd", s.dateEpochMillis).toString();
         h.tvDate.setText(date);
 
-        h.itemView.setOnClickListener(v -> onClick.onClick(h.getBindingAdapterPosition()));
+        h.itemView.setOnClickListener(v -> onClick.onClick(s));
+        h.btnMore.setOnClickListener(v -> onMoreClick.onMoreClick(v, s));
     }
 
     @Override
@@ -54,11 +64,13 @@ public class SessionEntityAdapter extends RecyclerView.Adapter<SessionEntityAdap
 
     static class VH extends RecyclerView.ViewHolder {
         TextView tvTitle, tvDate;
+        ImageButton btnMore;
 
         VH(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvSessionTitle);
-            tvDate  = itemView.findViewById(R.id.tvSessionDate);
+            tvDate = itemView.findViewById(R.id.tvSessionDate);
+            btnMore = itemView.findViewById(R.id.btnMore);
         }
     }
 }

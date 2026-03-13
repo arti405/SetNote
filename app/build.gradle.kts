@@ -45,6 +45,7 @@ dependencies {
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation(libs.navigation.fragment)
     annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     // Lifecycle
