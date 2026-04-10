@@ -1,203 +1,119 @@
-# TabNotes
+# SetNote
 
-TabNotes is a lightweight Android app for tracking gym workouts as simple structured notes.
-The goal is to replace messy text notes with a fast, minimal system for logging exercises, sets, and sessions.
-
-The app focuses on **clarity and speed**, avoiding the complexity of traditional fitness apps.
+SetNote is a minimalist Android application for tracking workout sessions.
+It focuses on clarity, speed, and structured data entry without unnecessary complexity.
 
 ---
 
-# Core Idea
+## Concept
 
-Many workout apps force users into rigid structures, statistics dashboards, or social features.
-TabNotes takes the opposite approach.
+Many workout tracking apps are overloaded with features and difficult to use.
+SetNote intentionally reduces functionality to the essentials:
 
-It acts like a **structured notebook for workouts**, allowing users to freely record exercises and sets while keeping everything organized and searchable.
+* Quickly create and edit workout sessions
+* Structure exercises and sets clearly
+* Easily revisit past training data
 
----
-
-# Features
-
-## Session Editor
-
-Create and edit workout sessions quickly.
-
-Each session can contain:
-
-* multiple exercises
-* multiple sets per exercise
-* weight and repetition entries
-* optional notes
-
-Additional functionality:
-
-* duplicate sets
-* reorder exercises
-* rename sessions
-* delete sessions
-* automatic saving using Room database
+The app uses a central hub screen instead of traditional tab-based navigation.
 
 ---
 
-## Templates
+## Features
 
-Users can save workout sessions as reusable templates.
+### Sessions
 
-Templates allow:
+* Create new workout sessions
+* Edit title and date
+* Add, modify, and delete exercises and sets
+* Automatic saving
 
-* quickly starting a workout from a predefined routine
-* reusing common exercise structures
-* building personal training plans
+### Editor
 
-Templates are managed inside the Archive system.
-
----
-
-## Home
-
-The Home tab shows **all sessions**, ordered by date.
-
-Features:
-
-* quick overview of all workout notes
-* direct access to any session
-* context menu (rename / delete)
-* quick creation via "+" button
-
----
-
-## Archive
-
-The Archive tab organizes sessions in multiple ways.
+* Dynamic management of exercises and sets
+* Drag-and-drop reordering
+* Multiple sets per exercise
+* Structured input interface
 
 ### Templates
 
-Saved workout templates.
+* Save sessions as reusable templates
+* Quickly create new sessions based on existing structures
 
-### All Sessions
+### Archive
 
-Full chronological list of all sessions.
+* Overview of all sessions
+* Organized by year, month, and day
+* Calendar view with highlighted training days
 
-### Year / Month Archive
+### Multi-Select
 
-Automatic folder structure:
+* Select multiple sessions
+* Batch deletion
 
-```
-Year
- └ Month
-    └ Sessions
-```
+### Export
 
-Sessions are automatically placed in the correct month and year.
-
-### Calendar Archive
-
-A monthly calendar view showing workout activity.
-
-Features:
-
-* sessions marked on calendar days
-* navigation between months
-* tap on a day to view that day's sessions
-* rename and delete sessions directly from the day view
+* Export sessions as PDF
 
 ---
 
-## Collections
+## Architecture
 
-Collections are user-created folders for grouping sessions manually.
+The app follows a standard Android architecture:
 
-Users can:
+* Single-activity structure
+* Navigation using fragments
+* RecyclerView for dynamic lists
+* Room for local data persistence
 
-* create collections
-* rename collections
-* delete collections
-* add sessions to collections
-* remove sessions from collections
+### Key Components
 
----
-
-# Architecture
-
-TabNotes uses a **Single Activity + Fragment architecture**.
-
-```
-MainActivity
- ├ HomeFragment
- ├ ArchiveRootFragment
- ├ CollectionsFragment
- └ SettingsFragment (planned)
-```
-
-The workout editor runs in a separate activity:
-
-```
-EditorActivity
-```
+* `EditorActivity` – handles session editing
+* `SessionsFragment` – displays all sessions
+* `ExerciseAdapter` – manages exercises
+* `SetAdapter` – manages sets
+* `AppDatabase` / DAO – data layer
 
 ---
 
-# Database
+## Data Model
 
-TabNotes uses **Room** for local data persistence.
+The app uses a relational structure:
 
-Entities:
+* Session → contains multiple exercises
+* Exercise → contains multiple sets
+* Template → similar to session, used as a reusable blueprint
 
-* SessionEntity
-* ExerciseEntity
-* SetEntity
-* FolderEntity
-* CollectionEntity
-* CollectionSessionCrossRef
-
-Relationships:
-
-```
-Session
- └ Exercises
-     └ Sets
-```
-
-Collections use a many-to-many relationship with sessions.
+All data is stored locally using Room (SQLite).
 
 ---
 
-# Technology
+## Tech Stack
 
 * Java
-* Android Studio
+* Android SDK
 * Room Database
 * RecyclerView
-* Material Components
 
 ---
 
-# Project Status
+## Current Status
 
-## Phase 1 – Core Editor
+* Core functionality implemented
+* Stable data flow and database integration
+* Hub-based navigation structure completed
+* Multi-select and template system implemented
 
-Implemented the workout editor, session management, templates, and PDF export.
+Pending improvements:
 
-## Phase 2 – App Architecture
-
-Implemented full navigation structure:
-
-* Home
-* Archive
-* Calendar history
-* Templates
-* Collections
+* UI refinement
+* Extended settings
+* Optional cloud synchronization
 
 ---
 
-# Roadmap
+## Goal
 
-Next planned steps:
-
-* UI overhaul
-* Settings screen
-* backup / export features
-* theme switching
+SetNote aims to provide a fast, simple, and structured way to track workouts without unnecessary features or complexity.
 
 ---
 
