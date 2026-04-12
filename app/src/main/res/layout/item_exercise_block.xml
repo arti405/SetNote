@@ -16,10 +16,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/etExercise"
+                android:id="@+id/etExerciseName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -27,39 +28,35 @@
                 android:inputType="textCapWords"
                 android:maxLines="1"/>
 
-            <Button
-                android:id="@+id/btnAddSet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+ Set"
-                android:layout_marginStart="10dp"/>
+            <ImageButton
+                android:id="@+id/btnExerciseMore"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_more"
+                android:contentDescription="More options" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvExerciseMeta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#666"
+            android:layout_marginBottom="8dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSets"
+            android:id="@+id/rvEntries"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddSet"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <Button
-                android:id="@+id/btnDupExercise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Duplicate"/>
-
-            <Button
-                android:id="@+id/btnDelExercise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:layout_marginStart="10dp"/>
-        </LinearLayout>
+            android:text="+ Add Set"
+            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
