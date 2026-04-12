@@ -1,4 +1,4 @@
-package com.example.setnote;
+package setnote;
 
 import org.junit.Test;
 

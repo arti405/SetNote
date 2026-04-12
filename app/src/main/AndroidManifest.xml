@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.setnote"
+    package="com.arti405.setnote"
     tools:ignore="ExtraText">
 
     <application
@@ -15,11 +15,11 @@
         android:theme="@style/Theme.SetNote">
 
         <activity
-            android:name=".ui.sessions.EditorActivity"
+            android:name="com.arti405.setnote.ui.sessions.EditorActivity"
             android:exported="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.arti405.setnote.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

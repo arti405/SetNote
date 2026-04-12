@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.setnote"
+    namespace = "com.arti405.setnote"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.setnote"
+        applicationId = "com.arti405.setnote"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
