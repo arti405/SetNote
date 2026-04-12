@@ -22,6 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TabNotes"
+rootProject.name = "SetNote"
 include(":app")
- 
