@@ -3,17 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.tabnotes"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    namespace = "com.example.setnote"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.tabnotes"
+        applicationId = "com.example.setnote"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -40,6 +36,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.gson)
     implementation("androidx.recyclerview:recyclerview:1.4.0")
     implementation("androidx.cardview:cardview:1.0.0")
 
