@@ -52,8 +52,3 @@ I focused on creating a clean, professional user interface. I implemented a `The
 2.  Open the project in Android Studio.
 3.  Sync the project with Gradle files.
 4.  Run the `app` module on an emulator or physical device.
-
----
-
-## License
-This project is open-source and free to use.
