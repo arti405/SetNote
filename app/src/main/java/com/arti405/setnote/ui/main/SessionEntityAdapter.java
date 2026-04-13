@@ -1,4 +1,4 @@
-package com.arti405.setnote.ui.sessions;
+package com.arti405.setnote.ui.main;
 
 import android.view.LayoutInflater;
 import android.view.View;

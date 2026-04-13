@@ -1,10 +1,9 @@
-package com.arti405.setnote.ui.sessions;
+package com.arti405.setnote.ui.editor;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,9 +27,6 @@ import com.arti405.setnote.data.TemplateEntity;
 import com.arti405.setnote.data.TemplateExerciseEntity;
 import com.arti405.setnote.data.TemplateSetEntity;
 import com.arti405.setnote.data.export.PdfExporter;
-import com.arti405.setnote.ui.editor.SetRow;
-import com.arti405.setnote.ui.editor.ExerciseAdapter;
-import com.arti405.setnote.ui.editor.ExerciseBlock;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;

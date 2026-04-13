@@ -1,4 +1,4 @@
-package com.arti405.setnote;
+package com.arti405.setnote.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +18,7 @@ import com.arti405.setnote.data.FolderEntity;
 import com.arti405.setnote.data.GymDao;
 import com.arti405.setnote.data.SessionEntity;
 import com.arti405.setnote.data.TemplateEntity;
-import com.arti405.setnote.ui.main.HubFragment;
-import com.arti405.setnote.ui.main.SessionsFragment;
-import com.arti405.setnote.ui.sessions.EditorActivity;
+import com.arti405.setnote.ui.editor.EditorActivity;
 
 import java.util.List;
 

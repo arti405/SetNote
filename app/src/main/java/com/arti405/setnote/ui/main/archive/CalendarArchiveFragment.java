@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.arti405.setnote.MainActivity;
+import com.arti405.setnote.ui.main.MainActivity;
 import com.arti405.setnote.R;
 import com.arti405.setnote.data.AppDatabase;
 import com.arti405.setnote.data.DbExecutors;

@@ -11,13 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.arti405.setnote.MainActivity;
 import com.arti405.setnote.R;
 import com.arti405.setnote.data.AppDatabase;
 import com.arti405.setnote.data.DbExecutors;
 import com.arti405.setnote.data.SessionEntity;
-import com.arti405.setnote.ui.sessions.EditorActivity;
-import com.arti405.setnote.ui.sessions.SessionEntityAdapter;
+import com.arti405.setnote.ui.editor.EditorActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;

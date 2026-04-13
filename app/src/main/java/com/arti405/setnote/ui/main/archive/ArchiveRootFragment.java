@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.arti405.setnote.MainActivity;
+import com.arti405.setnote.ui.main.MainActivity;
 import com.arti405.setnote.R;
 import com.arti405.setnote.ui.main.SessionsFragment;
 
