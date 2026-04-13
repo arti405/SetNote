@@ -1,13 +1,18 @@
 package com.arti405.setnote.ui.sessions;
 
-import android.app.AlertDialog;import android.content.Intent;import android.os.Bundle;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.InputType;
-import android.widget.Button;
-import android.widget.EditText;import android.widget.TextView;import android.widget.Toast;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,9 +24,14 @@ import com.arti405.setnote.data.ExerciseEntity;
 import com.arti405.setnote.data.GymDao;
 import com.arti405.setnote.data.SessionEntity;
 import com.arti405.setnote.data.SetEntity;
-import com.arti405.setnote.data.TemplateEntity;import com.arti405.setnote.data.TemplateExerciseEntity;import com.arti405.setnote.data.TemplateSetEntity;import com.arti405.setnote.data.export.PdfExporter;import com.arti405.setnote.ui.editor.SetRow;
+import com.arti405.setnote.data.TemplateEntity;
+import com.arti405.setnote.data.TemplateExerciseEntity;
+import com.arti405.setnote.data.TemplateSetEntity;
+import com.arti405.setnote.data.export.PdfExporter;
+import com.arti405.setnote.ui.editor.SetRow;
 import com.arti405.setnote.ui.editor.ExerciseAdapter;
 import com.arti405.setnote.ui.editor.ExerciseBlock;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -30,7 +40,6 @@ public class EditorActivity extends AppCompatActivity {
     private final ArrayList<ExerciseBlock> blocks = new ArrayList<>();
     private ExerciseAdapter adapter;
 
-    private int position = -1;
     private String sessionDate = "";
     private String sessionTitle = "Session";
 
@@ -47,16 +56,36 @@ public class EditorActivity extends AppCompatActivity {
         // Views
         tvHeaderTitle = findViewById(R.id.tvHeaderTitle);
         tvHeaderDate = findViewById(R.id.tvHeaderDate);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-        findViewById(R.id.btnBack).setOnClickListener(v ->
+        toolbar.setNavigationOnClickListener(v ->
                 getOnBackPressedDispatcher().onBackPressed()
-
         );
-        findViewById(R.id.btnHeaderMore).setOnClickListener(v -> showHeaderMenu(v));
+
+        toolbar.setOnMenuItemClickListener(item -> {
+            String title = item.getTitle().toString();
+            if ("Rename Session".equals(title)) {
+                showRenameDialog();
+                return true;
+            }
+            if ("Save as Template".equals(title)) {
+                showSaveTemplateDialog();
+                return true;
+            }
+            if ("Export PDF".equals(title)) {
+                exportPdf();
+                return true;
+            }
+            return false;
+        });
+
+        // Add menu manually since we aren't using setSupportActionBar for custom layout
+        toolbar.getMenu().add("Rename Session");
+        toolbar.getMenu().add("Save as Template");
+        toolbar.getMenu().add("Export PDF");
 
         // Intent
         sessionId = getIntent().getLongExtra("sessionId", -1);
-        position = getIntent().getIntExtra("position", -1);
 
         String t = getIntent().getStringExtra("title");
         String d = getIntent().getStringExtra("date");
@@ -72,16 +101,20 @@ public class EditorActivity extends AppCompatActivity {
         adapter = new ExerciseAdapter(blocks);
         rv.setAdapter(adapter);
 
-        // Default block
-        blocks.add(new ExerciseBlock());
-        adapter.notifyItemInserted(0);
+        // Load DB
+        if (sessionId >= 0) {
+            loadFromDb(sessionId);
+        } else {
+            blocks.add(new ExerciseBlock());
+            adapter.notifyItemInserted(0);
+        }
 
         // Add Exercise
-        Button btnAdd = findViewById(R.id.btnAddRow);
+        ExtendedFloatingActionButton btnAdd = findViewById(R.id.btnAddRow);
         btnAdd.setOnClickListener(v -> {
             blocks.add(new ExerciseBlock());
             adapter.notifyItemInserted(blocks.size() - 1);
-            rv.scrollToPosition(blocks.size() - 1);
+            rv.smoothScrollToPosition(blocks.size() - 1);
         });
 
         // Drag & Drop
@@ -114,42 +147,9 @@ public class EditorActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
-        // Load DB AFTER setup
-        if (sessionId >= 0) {
-            loadFromDb(sessionId);
-        }
-    }private void showHeaderMenu(android.view.View anchor) {
-        androidx.appcompat.widget.PopupMenu popup =
-                new androidx.appcompat.widget.PopupMenu(this, anchor);
-
-        popup.getMenu().add("Rename Session");
-        popup.getMenu().add("Save as Template");
-        popup.getMenu().add("Export PDF");
-
-        popup.setOnMenuItemClickListener(item -> {
-            String title = item.getTitle().toString();
-
-            if ("Rename Session".equals(title)) {
-                showRenameDialog();
-                return true;
-            }
-
-            if ("Save as Template".equals(title)) {
-                showSaveTemplateDialog();
-                return true;
-            }
-
-            if ("Export PDF".equals(title)) {
-                exportPdf();
-                return true;
-            }
-
-            return false;
-        });
-
-        popup.show();
-    }private void showRenameDialog() {
+    private void showRenameDialog() {
         EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         input.setText(sessionTitle);

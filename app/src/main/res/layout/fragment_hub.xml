@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
     android:fillViewport="true">
 
     <LinearLayout
@@ -13,43 +14,52 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- HEADER -->
-
         <!-- QUICK ACCESS -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:text="Quick Access"
-            android:textStyle="bold"/>
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textColor="?attr/colorPrimary"/>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="2dp">
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/colorOutlineVariant"
+            style="@style/Widget.Material3.CardView.Elevated">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="8dp">
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rowStartSession"
+                    style="@style/Widget.Material3.Button.TextButton.Icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Start new session"/>
+                    android:gravity="start|center_vertical"
+                    android:text="Start new session"
+                    android:textColor="?attr/colorOnSurface"
+                    app:icon="@android:drawable/ic_input_add"
+                    app:iconTint="?attr/colorPrimary"/>
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/rowStartTemplate"
+                    style="@style/Widget.Material3.Button.TextButton.Icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:padding="8dp"
-                    android:text="Start from template"/>
+                    android:gravity="start|center_vertical"
+                    android:text="Start from template"
+                    android:textColor="?attr/colorOnSurface"
+                    app:icon="@android:drawable/ic_menu_today"
+                    app:iconTint="?attr/colorPrimary"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -60,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -67,13 +78,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Archive"
-                android:textStyle="bold"/>
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorPrimary"/>
 
             <TextView
                 android:id="@+id/tvArchiveToggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="▼"/>
+                android:text="▼"
+                android:textColor="?attr/colorOutline"/>
         </LinearLayout>
 
         <!-- ARCHIVE CONTENT -->
@@ -81,9 +94,12 @@
             android:id="@+id/archiveCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="2dp">
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/colorOutlineVariant"
+            style="@style/Widget.Material3.CardView.Elevated">
 
             <LinearLayout
                 android:id="@+id/archiveContent"
@@ -91,46 +107,46 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- All Sessions -->
                 <TextView
                     android:id="@+id/rowAllSessions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:text="All Sessions"/>
+                    android:text="All Sessions"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"/>
 
-                <!-- Divider -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#222222"/>
+                    android:background="?attr/colorOutlineVariant"/>
 
-                <!-- Templates -->
                 <TextView
                     android:id="@+id/rowTemplates"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:text="Templates"/>
+                    android:text="Templates"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"/>
 
-                <!-- Divider -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#222222"/>
+                    android:background="?attr/colorOutlineVariant"/>
 
-                <!-- Year / Month -->
                 <TextView
                     android:id="@+id/rowYearMonth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:text="Year / Month Archive"/>
-
-
+                    android:text="Year / Month Archive"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
         <!-- COLLECTIONS HEADER -->
         <LinearLayout
             android:id="@+id/collectionsHeader"
@@ -145,7 +161,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Collections"
-                android:textStyle="bold"/>
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorPrimary"/>
 
             <ImageButton
                 android:id="@+id/btnHubAddCollection"
@@ -154,22 +171,26 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="New Collection"
                 android:src="@android:drawable/ic_menu_add"
-                tools:srcCompat="@android:drawable/ic_menu_add" />
+                app:tint="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/tvCollectionsSectionToggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="▶"/>
+                android:text="▶"
+                android:textColor="?attr/colorOutline"/>
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/collectionsCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             app:cardCornerRadius="16dp"
-            app:cardElevation="2dp">
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/colorOutlineVariant"
+            style="@style/Widget.Material3.CardView.Elevated">
 
             <LinearLayout
                 android:id="@+id/collectionsContent"
@@ -187,20 +208,24 @@
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
         <!-- CALENDAR PREVIEW -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Calendar"
-            android:textStyle="bold"/>
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textColor="?attr/colorPrimary"/>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp">
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="4dp"
+            style="@style/Widget.Material3.CardView.Elevated">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -211,15 +236,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <ImageButton
                         android:id="@+id/btnHubPrevMonth"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="Previous month"
-                        android:src="@android:drawable/ic_media_previous" />
+                        android:src="@android:drawable/ic_media_previous"
+                        app:tint="?attr/colorOnSurfaceVariant"/>
 
                     <TextView
                         android:id="@+id/tvHubMonthLabel"
@@ -228,79 +255,32 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="March 2026"
-                        android:textSize="18sp"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
                         android:textStyle="bold" />
 
                     <ImageButton
                         android:id="@+id/btnHubNextMonth"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="Next month"
-                        android:src="@android:drawable/ic_media_next" />
+                        android:src="@android:drawable/ic_media_next"
+                        app:tint="?attr/colorOnSurfaceVariant"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Mo"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Di"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Mi"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Do"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Fr"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Sa"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="So"
-                        android:textStyle="bold" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Mo" android:textAppearance="?attr/textAppearanceLabelLarge" android:textColor="?attr/colorOutline" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Tu" android:textAppearance="?attr/textAppearanceLabelLarge" android:textColor="?attr/colorOutline" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="We" android:textAppearance="?attr/textAppearanceLabelLarge" android:textColor="?attr/colorOutline" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Th" android:textAppearance="?attr/textAppearanceLabelLarge" android:textColor="?attr/colorOutline" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Fr" android:textAppearance="?attr/textAppearanceLabelLarge" android:textColor="?attr/colorOutline" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Sa" android:textAppearance="?attr/textAppearanceLabelLarge" android:textColor="?attr/colorOutline" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Su" android:textAppearance="?attr/textAppearanceLabelLarge" android:textColor="?attr/colorOutline" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

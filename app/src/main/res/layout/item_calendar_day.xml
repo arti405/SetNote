@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dayRoot"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="4dp">
-
-    <TextView
-        android:id="@+id/tvDay"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:gravity="center"
-        android:text="1"
-        android:textSize="16sp" />
+    android:layout_height="48dp"
+    android:padding="2dp">
 
     <View
-        android:id="@+id/vMarker"
-        android:layout_width="6dp"
-        android:layout_height="6dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/bg_calendar_marker"
-        android:visibility="invisible" />
-</LinearLayout>
+        android:id="@+id/vSelectionBackground"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_calendar_day_selected"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface" />
+
+        <View
+            android:id="@+id/vMarker"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/bg_calendar_marker"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+</FrameLayout>

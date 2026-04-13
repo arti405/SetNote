@@ -3,7 +3,7 @@ package com.arti405.setnote.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +18,7 @@ import com.arti405.setnote.data.DbExecutors;
 import com.arti405.setnote.data.SessionEntity;
 import com.arti405.setnote.ui.sessions.EditorActivity;
 import com.arti405.setnote.ui.sessions.SessionEntityAdapter;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ public class SessionsFragment extends Fragment {
 
     private final ArrayList<SessionEntity> sessions = new ArrayList<>();
     private SessionEntityAdapter adapter;
+    private LinearLayout emptyState;
 
     private boolean selectionMode = false;
     private final Set<Long> selectedIds = new HashSet<>();
@@ -47,7 +49,7 @@ public class SessionsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        emptyState = view.findViewById(R.id.emptyState);
         RecyclerView rv = view.findViewById(R.id.rvSessions);
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -69,10 +71,14 @@ public class SessionsFragment extends Fragment {
             sessions.clear();
             if (list != null) sessions.addAll(list);
             adapter.notifyDataSetChanged();
+            
+            if (emptyState != null) {
+                emptyState.setVisibility(sessions.isEmpty() ? View.VISIBLE : View.GONE);
+            }
         });
 
-        Button btnNew = view.findViewById(R.id.btnNewSession);
-        btnNew.setOnClickListener(v -> {
+        ExtendedFloatingActionButton fabNew = view.findViewById(R.id.fabNewSession);
+        fabNew.setOnClickListener(v -> {
             DbExecutors.IO.execute(() -> {
                 SessionEntity s = new SessionEntity();
                 s.title = "New Session";
@@ -161,22 +167,20 @@ public class SessionsFragment extends Fragment {
         menu.clear();
 
         if (!selectionMode) {
-            menu.add("Select");
+            menu.add(0, 101, 0, "Select");
         } else {
-            menu.add("Delete");
+            menu.add(0, 102, 0, "Delete");
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String title = item.getTitle().toString();
-
-        if ("Select".equals(title)) {
+        if (item.getItemId() == 101) {
             startSelectionMode();
             return true;
         }
 
-        if ("Delete".equals(title)) {
+        if (item.getItemId() == 102) {
             deleteSelected();
             return true;
         }
