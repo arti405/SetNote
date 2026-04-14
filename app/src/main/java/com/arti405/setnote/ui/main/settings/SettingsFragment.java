@@ -1,5 +1,7 @@
 package com.arti405.setnote.ui.main.settings;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -68,7 +70,16 @@ public class SettingsFragment extends Fragment {
         bindRow(view.findViewById(R.id.rowVersion),
                 "Version",
                 "Current app version",
-                "0.3");
+                getAppVersion());
+    }
+
+    private String getAppVersion() {
+        try {
+            PackageInfo pInfo = requireContext().getPackageManager().getPackageInfo(requireContext().getPackageName(), 0);
+            return pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "1.0";
+        }
     }
 
     private void exportData() {
