@@ -4,13 +4,23 @@ SetNote is a minimalist Android application designed for tracking workout sessio
 
 ---
 
+## Screenshots
+
+| Main Hub | Session Editor | All Sessions | Settings |
+| :---: | :---: | :---: | :---: |
+| ![Hub](screenshots/hub.png) | ![Session](screenshots/session.png) | ![Archive](screenshots/archive.png) | ![Settings](screenshots/settings.png) |
+
+---
+
 ## Key Features
 
-*   Rapid Session Logging: A streamlined editor to add exercises and sets during a workout.
-*   Workout Templates: Save routines as templates to start future sessions faster.
-*   Session Archive: A history of past performance organized for easy review.
-*   PDF Export: Generate professional summaries of workout sessions for personal backup or sharing.
-*   Dynamic Theme Support: Seamlessly switches between light and dark modes based on system preferences.
+*   **Rapid Session Logging**: A streamlined editor to add exercises and sets during a workout.
+*   **Calendar View**: Track your consistency with a visual history of your workout days.
+*   **Exercise Collections**: Organize your workouts into custom collections for better management.
+*   **Workout Templates**: Save routines as templates to start future sessions faster.
+*   **Session Archive**: A history of past performance organized for easy review.
+*   **PDF Export**: Generate professional summaries of workout sessions for personal backup or sharing.
+*   **Dynamic Theme Support**: Seamlessly switches between light and dark modes based on system preferences.
 
 ---
 
@@ -18,11 +28,11 @@ SetNote is a minimalist Android application designed for tracking workout sessio
 
 I used official Android Jetpack libraries to ensure the app is stable and follows modern development standards:
 
-*   Language: Java
-*   Database: Room Persistence Library for local data storage.
-*   Navigation: Jetpack Navigation component for a smooth, single-activity fragment flow.
-*   UI Components: Material Design 3, RecyclerView for dynamic lists, and CardView.
-*   Architecture: MVVM (Model-View-ViewModel) to separate data logic from the user interface.
+*   **Language**: Java
+*   **Database**: Room Persistence Library for local data storage.
+*   **Navigation**: Jetpack Navigation component for a smooth, single-activity fragment flow.
+*   **UI Components**: Material Design 3, RecyclerView for dynamic lists, and CardView.
+*   **Architecture**: MVVM (Model-View-ViewModel) to separate data logic from the user interface.
 
 ---
 
